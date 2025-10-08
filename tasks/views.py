@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+from django.views import generic
 
 from tasks.models import TaskType, Position, Task
 
@@ -22,3 +23,31 @@ def index(request):
     }
 
     return render(request, "tasks/index.html", context=context)
+
+
+class TaskTypeListView(generic.ListView):
+    model = TaskType
+    context_object_name = "task_type_list"
+    template_name = "tasks/task_type_list.html"
+    paginate_by = 2
+
+
+class PositionListView(generic.ListView):
+    model = Position
+    context_object_name = "position_list"
+    template_name = "tasks/position_list.html"
+    paginate_by = 2
+
+
+class WorkerListView(generic.ListView):
+    model = get_user_model()
+    queryset = get_user_model().objects.select_related("position")
+    paginate_by = 2
+
+
+class TaskListView(generic.ListView):
+    model = Task
+    context_object_name = "task_list"
+    template_name = "tasks/task_list.html"
+    queryset = Task.objects.select_related("task_type")
+    paginate_by = 2
