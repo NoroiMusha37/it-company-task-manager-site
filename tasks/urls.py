@@ -29,5 +29,6 @@ urlpatterns = [
         TaskListView.as_view(),
         name="task-list",
     ),
-
 ]
+
+app_name = "tasks"

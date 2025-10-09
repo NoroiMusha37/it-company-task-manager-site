@@ -6,7 +6,6 @@ from django.views import generic
 from tasks.models import TaskType, Position, Task
 
 
-@login_required
 def index(request):
     """View function for the home page of the site."""
 
