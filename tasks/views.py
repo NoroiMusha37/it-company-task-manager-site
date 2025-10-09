@@ -40,8 +40,22 @@ class PositionListView(generic.ListView):
 
 class WorkerListView(generic.ListView):
     model = get_user_model()
-    queryset = get_user_model().objects.select_related("position")
+    queryset = get_user_model().objects.prefetch_related("position")
     paginate_by = 2
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        position_id = self.request.GET.get("position")
+        if position_id:
+            queryset = queryset.filter(position_id=position_id)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        position_id = self.request.GET.get("position")
+        if position_id:
+            context["position"] = Position.objects.get(pk=position_id)
+        return context
 
 
 class WorkerDetailView(generic.DetailView):
@@ -54,6 +68,20 @@ class TaskListView(generic.ListView):
     template_name = "tasks/task_list.html"
     queryset = Task.objects.select_related("task_type")
     paginate_by = 2
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        task_type_id = self.request.GET.get("task_type")
+        if task_type_id:
+            queryset = queryset.filter(task_type_id=task_type_id)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        task_type_id = self.request.GET.get("task_type")
+        if task_type_id:
+            context["task_type"] = TaskType.objects.get(pk=task_type_id)
+        return context
 
 
 class TaskDetailView(generic.DetailView):
