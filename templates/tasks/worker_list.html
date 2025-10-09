@@ -2,19 +2,27 @@
 
 {% block content %}
   <h1>
-    Worker List
+    {% if position %}
+      Workers with position: {{ position.name }}
+    {% else %}
+      Workers
+    {% endif %}
   </h1>
   {% if worker_list %}
     <ul>
       {% for worker in worker_list %}
         <li>
-        <a href="{% url "tasks:worker-detail" pk=worker.id %} ">{{ worker.id }}</a>
+          <a href="{% url "tasks:worker-detail" pk=worker.id %} ">{{ worker.id }}</a>
           {{ worker.username }} {{ worker.first_name }}
           {{ worker.last_name }} {{ worker.position }}
         </li>
       {% endfor %}
     </ul>
   {% else %}
-    <p>There are no workers in the company</p>
+    {% if position %}
+      <p>There are no workers with position {{ position.name }}</p>
+    {% else %}
+      <p>There are no workers in the company</p>
+    {% endif %}
   {% endif %}
 {% endblock %}
