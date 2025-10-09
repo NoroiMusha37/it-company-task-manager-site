@@ -44,9 +44,18 @@ class WorkerListView(generic.ListView):
     paginate_by = 2
 
 
+class WorkerDetailView(generic.DetailView):
+    model = get_user_model()
+
+
 class TaskListView(generic.ListView):
     model = Task
     context_object_name = "task_list"
     template_name = "tasks/task_list.html"
     queryset = Task.objects.select_related("task_type")
     paginate_by = 2
+
+
+class TaskDetailView(generic.DetailView):
+    model = Task
+    queryset = Task.objects.prefetch_related("assignees")
