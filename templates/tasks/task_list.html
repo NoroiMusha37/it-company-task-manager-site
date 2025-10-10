@@ -4,8 +4,11 @@
   <h1>
     {% if task_type %}
       Tasks of type: {{ task_type.name }}
+      <br>
+      <a href="{% url "tasks:task-type-list" %}" class="btn btn-primary link-to-page">Back</a>
     {% else %}
       Tasks
+      <a href="{% url "tasks:task-create" %}" class="btn btn-primary link-to-page">Create</a>
     {% endif %}
   </h1>
   {% if task_list %}

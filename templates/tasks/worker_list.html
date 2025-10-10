@@ -4,8 +4,11 @@
   <h1>
     {% if position %}
       Workers with position: {{ position.name }}
+      <br>
+      <a href="{% url "tasks:position-list" %}" class="btn btn-primary link-to-page">Back</a>
     {% else %}
       Workers
+      <a href="{% url "tasks:worker-create" %}" class="btn btn-primary link-to-page">Create</a>
     {% endif %}
   </h1>
   {% if worker_list %}

@@ -4,6 +4,7 @@
   <h1>
     Task types
   </h1>
+  <a href="{% url "tasks:task-type-create" %}" class="btn btn-primary link-to-page">Create task type</a>
   {% if task_type_list %}
     <ul>
       {% for task_type in task_type_list %}
