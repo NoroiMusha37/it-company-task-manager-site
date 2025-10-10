@@ -1,11 +1,11 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views import generic
 
 from .models import TaskType, Position, Task, Worker
-from .forms import WorkerCreationForm, TaskForm
+from .forms import WorkerCreationForm, TaskForm, WorkerPositionUpdateForm
 
 
 def index(request):
@@ -40,6 +40,13 @@ class TaskTypeCreateView(generic.CreateView):
     success_url = reverse_lazy("tasks:task-type-list")
 
 
+class TaskTypeUpdateView(generic.UpdateView):
+    model = TaskType
+    template_name = "tasks/task_type_form.html"
+    fields = "__all__"
+    success_url = reverse_lazy("tasks:task-type-list")
+
+
 class PositionListView(generic.ListView):
     model = Position
     context_object_name = "position_list"
@@ -48,6 +55,12 @@ class PositionListView(generic.ListView):
 
 
 class PositionCreateView(generic.CreateView):
+    model = Position
+    fields = "__all__"
+    success_url = reverse_lazy("tasks:position-list")
+
+
+class PositionUpdateView(generic.UpdateView):
     model = Position
     fields = "__all__"
     success_url = reverse_lazy("tasks:position-list")
@@ -78,9 +91,17 @@ class WorkerDetailView(generic.DetailView):
 
 
 class WorkerCreateView(generic.CreateView):
-    model = Worker
+    model = get_user_model()
     form_class = WorkerCreationForm
     success_url = reverse_lazy("tasks:worker-list")
+
+
+class WorkerUpdateView(generic.UpdateView):
+    model = get_user_model()
+    form_class = WorkerPositionUpdateForm
+
+    def get_success_url(self):
+        return reverse("tasks:worker-detail", kwargs={"pk": self.object.pk})
 
 
 class TaskListView(generic.ListView):
@@ -114,3 +135,11 @@ class TaskCreateView(generic.CreateView):
     model = Task
     form_class = TaskForm
     success_url = reverse_lazy("tasks:task-list")
+
+
+class TaskUpdateView(generic.UpdateView):
+    model = Task
+    form_class = TaskForm
+
+    def get_success_url(self):
+        return reverse("tasks:task-detail", kwargs={"pk": self.object.pk})

@@ -15,6 +15,12 @@ class WorkerCreationForm(UserCreationForm):
         )
 
 
+class WorkerPositionUpdateForm(forms.ModelForm):
+    class Meta:
+        model = get_user_model()
+        fields = ("position",)
+
+
 class TaskForm(forms.ModelForm):
     assignees = forms.ModelMultipleChoiceField(
         queryset=get_user_model().objects.all(),
