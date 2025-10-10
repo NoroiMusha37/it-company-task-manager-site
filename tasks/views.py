@@ -1,9 +1,11 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views import generic
 
-from tasks.models import TaskType, Position, Task
+from .models import TaskType, Position, Task, Worker
+from .forms import WorkerCreationForm, TaskForm
 
 
 def index(request):
@@ -31,11 +33,24 @@ class TaskTypeListView(generic.ListView):
     paginate_by = 2
 
 
+class TaskTypeCreateView(generic.CreateView):
+    model = TaskType
+    template_name = "tasks/task_type_form.html"
+    fields = "__all__"
+    success_url = reverse_lazy("tasks:task-type-list")
+
+
 class PositionListView(generic.ListView):
     model = Position
     context_object_name = "position_list"
     template_name = "tasks/position_list.html"
     paginate_by = 2
+
+
+class PositionCreateView(generic.CreateView):
+    model = Position
+    fields = "__all__"
+    success_url = reverse_lazy("tasks:position-list")
 
 
 class WorkerListView(generic.ListView):
@@ -60,6 +75,12 @@ class WorkerListView(generic.ListView):
 
 class WorkerDetailView(generic.DetailView):
     model = get_user_model()
+
+
+class WorkerCreateView(generic.CreateView):
+    model = Worker
+    form_class = WorkerCreationForm
+    success_url = reverse_lazy("tasks:worker-list")
 
 
 class TaskListView(generic.ListView):
@@ -87,3 +108,9 @@ class TaskListView(generic.ListView):
 class TaskDetailView(generic.DetailView):
     model = Task
     queryset = Task.objects.prefetch_related("assignees")
+
+
+class TaskCreateView(generic.CreateView):
+    model = Task
+    form_class = TaskForm
+    success_url = reverse_lazy("tasks:task-list")
