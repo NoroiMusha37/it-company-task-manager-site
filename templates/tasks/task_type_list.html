@@ -10,6 +10,7 @@
       {% for task_type in task_type_list %}
         <li>
           <a href="{% url "tasks:task-list" %}?task_type={{ task_type.id }}"> {{ task_type.name }}</a>
+          <a href="{% url "tasks:task-type-update" pk=task_type.id %}" class="btn btn-primary">Update</a>
         </li>
       {% endfor %}
     </ul>

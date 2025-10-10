@@ -4,6 +4,8 @@
   <h1>
     {{ worker.username }}
   </h1>
+  <a href="{% url "tasks:worker-list" %}" class="btn btn-secondary">Back</a>
+  <a href="{% url "tasks:worker-update" pk=worker.id %}" class="btn btn-primary">Update</a>
 
   <p><strong>First name:</strong> {{ worker.first_name }}</p>
   <p><strong>Last name:</strong> {{ worker.last_name }}</p>
@@ -13,12 +15,12 @@
     <h4>Tasks</h4>
 
     {% for task in worker.tasks.all %}
-        <hr>
-        <p><strong>Name:</strong> {{ task.name }}</p>
-        <p><strong>Priority:</strong> {{ task.priority }}</p>
-        <p><strong>Deadline:</strong> {{ task.deadline }}</p>
-        <p><strong>Completed:</strong> {{ task.is_completed }}</p>
-        <p class="text-muted"><strong>Id:</strong> {{task.id}}</p>
+      <hr>
+      <p><strong>Name:</strong> {{ task.name }}</p>
+      <p><strong>Priority:</strong> {{ task.priority }}</p>
+      <p><strong>Deadline:</strong> {{ task.deadline }}</p>
+      <p><strong>Completed:</strong> {{ task.is_completed }}</p>
+      <p class="text-muted"><strong>Id:</strong> {{ task.id }}</p>
 
     {% empty %}
       <p>Worker has no tasks</p>
