@@ -11,6 +11,13 @@
       <a href="{% url "tasks:worker-create" %}" class="btn btn-primary link-to-page">Create</a>
     {% endif %}
   </h1>
+  <form method="get" class="mb-3">
+    {% if position %}
+      <input type="hidden" name="position" value="{{ position.id }}">
+    {% endif %}
+    {{ search_form.as_p }}
+    <input type="submit" value="🔍">
+  </form>
   {% if worker_list %}
     <ul>
       {% for worker in worker_list %}

@@ -5,6 +5,10 @@
     Positions
   </h1>
   <a href="{% url "tasks:position-create" %}" class="btn btn-primary link-to-page">Create</a>
+  <form method="get" class="mb-3">
+    {{ search_form.as_p }}
+    <input type="submit" value="🔍">
+  </form>
   {% if position_list %}
     <ul>
       {% for position in position_list %}
