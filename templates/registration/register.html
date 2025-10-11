@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if form.errors %}
+  <p>Passwords didn't match. Please try again.</p>
+{% endif %}
+
+<h1>Sign up</h1>
+
+<form method="post" action="{% url 'tasks:register' %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Sign up" class="btn btn-primary" />
+  <input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+{% endblock %}
