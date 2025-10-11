@@ -5,6 +5,28 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Task
 
 
+class TaskTypeNameSearchForm(forms.Form):
+    name = forms.CharField(
+        max_length=100,
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={"placeholder": "Search by name"}
+        ),
+    )
+
+
+class PositionNameSearchForm(forms.Form):
+    name = forms.CharField(
+        max_length=100,
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={"placeholder": "Search by name"}
+        ),
+    )
+
+
 class WorkerCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = get_user_model()
@@ -21,6 +43,17 @@ class WorkerPositionUpdateForm(forms.ModelForm):
         fields = ("position",)
 
 
+class WorkerUsernameSearchForm(forms.Form):
+    username = forms.CharField(
+        max_length=100,
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={"placeholder": "Search by username"}
+        ),
+    )
+
+
 class TaskForm(forms.ModelForm):
     assignees = forms.ModelMultipleChoiceField(
         queryset=get_user_model().objects.all(),
@@ -30,6 +63,18 @@ class TaskForm(forms.ModelForm):
         widget=forms.DateTimeInput(attrs={"type": "datetime-local"}),
         input_formats=("%Y-%m-%dT%H:%M",),
     )
+
     class Meta:
         model = Task
         fields = "__all__"
+
+
+class TaskNameSearchForm(forms.Form):
+    name = forms.CharField(
+        max_length=100,
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={"placeholder": "Search by name"}
+        ),
+    )
