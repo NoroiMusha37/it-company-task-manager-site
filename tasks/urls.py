@@ -18,7 +18,7 @@ from .views import (
     TaskTypeDeleteView,
     PositionDeleteView,
     WorkerDeleteView,
-    TaskDeleteView,
+    TaskDeleteView, WorkerRegisterView,
 )
 
 urlpatterns = [
@@ -109,6 +109,11 @@ urlpatterns = [
         TaskDeleteView.as_view(),
         name="task-delete",
     ),
+    path(
+        "register/",
+        WorkerRegisterView.as_view(),
+        name="register",
+    )
 ]
 
 app_name = "tasks"
