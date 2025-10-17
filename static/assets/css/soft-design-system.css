@@ -5820,7 +5820,7 @@ textarea.form-control-lg {
   background-color: #252f40 !important; }
 
 .bg-darker {
-  background-color: #1b252b !important; }
+  background-color: #1d242c !important; }
 
 .bg-white {
   background-color: #fff !important; }
@@ -9219,18 +9219,23 @@ hr.vertical {
   height: 100%;
   right: 0;
   top: 0;
-  width: 1px; }
+  width: 4px; }
   hr.vertical.light {
     background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), white, rgba(255, 255, 255, 0)); }
   hr.vertical.dark {
     background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0)); }
+  hr.vertical.darker {
+    background-image: linear-gradient(to bottom, rgba(29,36,44,0), rgba(29,36,44,0.6), rgba(29,36,44,0)); }
 
 hr.horizontal {
-  background-color: transparent; }
+  background-color: transparent;
+  height: 4px;}
   hr.horizontal.light {
     background-image: linear-gradient(to right, rgba(255, 255, 255, 0), white, rgba(255, 255, 255, 0)); }
   hr.horizontal.dark {
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0)); }
+  hr.horizontal.darker {
+    background-image: linear-gradient(to right, rgba(29,36,44,0), rgba(29,36,44,0.6), rgba(29,36,44,0)); }
 
 .lock-size {
   width: 1.7rem;
