@@ -20,16 +20,16 @@
           </div>
         </div>
         <div class="row mb-3 text-start">
-          <div class="col-6 col-md-3 mb-2 text-detail"><strong>Task Type:</strong> <span
+          <div class="col-6 col-md-3 mb-2 text-detail fs-5"><strong>Task Type:</strong> <span
               class="ms-1">{{ task.task_type.name }}</span></div>
-          <div class="col-6 col-md-3 mb-2 text-detail"><strong>Completed:</strong>
+          <div class="col-6 col-md-3 mb-2 text-detail fs-5"><strong>Completed:</strong>
             <span class="ms-1 {% if task.is_completed %}text-success{% else %}text-danger{% endif %}">
             {{ task.is_completed }}
           </span>
           </div>
-          <div class="col-6 col-md-2 mb-2 text-detail"><strong>Priority:</strong> <span
+          <div class="col-6 col-md-2 mb-2 text-detail fs-5"><strong>Priority:</strong> <span
               class="ms-1">{{ task.priority }}</span></div>
-          <div class="col-6 col-md-4 mb-2 text-detail"><strong>Deadline:</strong> <span
+          <div class="col-6 col-md-4 mb-2 text-detail fs-5"><strong>Deadline:</strong> <span
               class="ms-1">{{ task.deadline }}</span></div>
         </div>
         <div class="mb-4">
