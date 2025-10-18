@@ -1,30 +1,63 @@
-{% extends "base.html" %}
+{% extends 'layouts/base-presentation.html' %}
+
+{% block title %} Task Types {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block body_class %} list-page {% endblock body_class %}
 
 {% block content %}
-  <h1>
-    {{ task.name }}
-  </h1>
-  <a href="{% url "tasks:task-list" %}" class="btn btn-secondary">Back</a>
-  <a href="{% url "tasks:task-update" pk=task.id %}" class="btn btn-primary">Update</a>
-  <a href="{% url "tasks:task-delete" pk=task.id %}" class="btn btn-danger">Delete</a>
-
-  <p><strong>Description:</strong> {{ task.description }}</p>
-  <p><strong>Priority:</strong> {{ task.priority }}</p>
-  <p><strong>Deadline:</strong> {{ task.deadline }}</p>
-  <p><strong>Completed:</strong> {{ task.is_completed }}</p>
-  <p><strong>Task Type:</strong> {{ task.task_type }}</p>
-
-  <div class="ml-3">
-    <h4>Assignees</h4>
-
-    {% for assignee in task.assignees.all %}
-      <hr>
-      <p><strong>Username:</strong> {{ assignee.username }}</p>
-      <p><strong>Position:</strong> {{ assignee.position }}</p>
-      <p class="text-muted"><strong>Id:</strong> {{ assignee.id }}</p>
-
-    {% empty %}
-      <p>No workers assigned to this task</p>
-    {% endfor %}
-  </div>
-{% endblock %}
+  <section class="pt-5 bg-darker position-relative">
+    <div class="container mt-5">
+      <div class="card z-index-2 border-radius-xl shadow-lg bg-dark text-light p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+          <h1 class="mb-0 text-info text-gradient">{{ task.name }}</h1>
+          <div class="d-flex gap-2 flex-wrap">
+            <a href="{% url 'tasks:task-list' %}" class="btn bg-gradient-light">Back</a>
+            <a href="{% url 'tasks:task-update' pk=task.id %}" class="btn bg-gradient-info">Update</a>
+            <a href="{% url 'tasks:task-delete' pk=task.id %}" class="btn btn-danger">Delete</a>
+          </div>
+        </div>
+        <div class="row mb-3 text-start">
+          <div class="col-6 col-md-3 mb-2 text-detail"><strong>Task Type:</strong> <span
+              class="ms-1">{{ task.task_type.name }}</span></div>
+          <div class="col-6 col-md-3 mb-2 text-detail"><strong>Completed:</strong>
+            <span class="ms-1 {% if task.is_completed %}text-success{% else %}text-danger{% endif %}">
+            {{ task.is_completed }}
+          </span>
+          </div>
+          <div class="col-6 col-md-2 mb-2 text-detail"><strong>Priority:</strong> <span
+              class="ms-1">{{ task.priority }}</span></div>
+          <div class="col-6 col-md-4 mb-2 text-detail"><strong>Deadline:</strong> <span
+              class="ms-1">{{ task.deadline }}</span></div>
+        </div>
+        <div class="mb-4">
+          <h5>Description:</h5>
+          <p><span class="ms-1 text-detail">{{ task.description }}</span></p>
+        </div>
+        <div class="mt-4">
+          <h4 class="text-general">Assignees</h4>
+          {% if task.assignees.all %}
+            {% for assignee in task.assignees.all %}
+              <hr class="border-secondary">
+              <div class="row mb-2">
+                <div class="col-12 col-md-4 text-detail">
+                  <strong>Username:</strong>
+                  <a href="{% url 'tasks:worker-detail' pk=assignee.id %}"
+                     class="text-info font-weight-bold ms-1">{{ assignee.username }}</a>
+                </div>
+                <div class="col-12 col-md-4 text-detail"><strong>Position:</strong> <span
+                    class="ms-1">{{ assignee.position.name }}</span></div>
+                <div class="col-12 col-md-4 text-detail"><strong>Id:</strong> <span
+                    class="ms-1">{{ assignee.id }}</span></div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p class="text-muted">No workers assigned to this task</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock content %}
