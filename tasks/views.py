@@ -9,7 +9,7 @@ from .models import TaskType, Position, Task, Worker
 from .forms import (
     WorkerCreationForm,
     TaskForm,
-    WorkerPositionUpdateForm,
+    WorkerUpdateForm,
     TaskTypeNameSearchForm,
     PositionNameSearchForm,
     WorkerUsernameSearchForm,
@@ -166,7 +166,7 @@ class WorkerCreateView(LoginRequiredMixin, generic.CreateView):
 
 class WorkerUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = get_user_model()
-    form_class = WorkerPositionUpdateForm
+    form_class = WorkerUpdateForm
 
     def get_success_url(self):
         return reverse("tasks:worker-detail", kwargs={"pk": self.object.pk})

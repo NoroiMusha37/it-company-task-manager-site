@@ -109,7 +109,7 @@ class WorkerCreationForm(UserCreationForm):
         )
 
 
-class WorkerPositionUpdateForm(forms.ModelForm):
+class WorkerUpdateForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
         fields = ("username", "first_name", "last_name", "position")
