@@ -21,14 +21,14 @@
             <button type="submit" class="btn bg-gradient-info">Search</button>
           </div>
         </form>
-        <a href="{% url 'tasks:position-create' %}" class="btn bg-gradient-info">Create Position</a>
+        <a href="{% url 'tasks:position-create' %}" class="btn bg-gradient-success text-white">Create Position</a>
 
       </div>
         {% if position_list %}
           <div class="container">
             <div class="row text-light fw-bold mb-2 py-2">
               <div class="col ps-6 text-secondary">Name</div>
-              <div class="col text-end pe-6 text-secondary">Actions</div>
+              <div class="col text-end pe-9 text-secondary">Actions</div>
             </div>
             {% for position in position_list %}
               <div class="row align-items-center py-2

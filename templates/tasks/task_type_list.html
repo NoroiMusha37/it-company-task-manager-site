@@ -21,13 +21,13 @@
             <button type="submit" class="btn bg-gradient-info">Search</button>
           </div>
         </form>
-        <a href="{% url 'tasks:task-type-create' %}" class="btn bg-gradient-info">Create Task Type</a>
+        <a href="{% url 'tasks:task-type-create' %}" class="btn bg-gradient-success text-white">Create Task Type</a>
       </div>
         {% if task_type_list %}
           <div class="container">
             <div class="row text-light fw-bold mb-2 py-2">
               <div class="col ps-6 text-secondary">Name</div>
-              <div class="col text-end pe-6 text-secondary">Actions</div>
+              <div class="col text-end pe-9 text-secondary">Actions</div>
             </div>
             {% for task_type in task_type_list %}
               <div class="row align-items-center py-2
