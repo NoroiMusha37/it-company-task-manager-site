@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 
-from .models import Task
+from .models import Task, TaskType, Position
 
 
 class TaskTypeNameSearchForm(forms.Form):
@@ -19,6 +19,20 @@ class TaskTypeNameSearchForm(forms.Form):
     )
 
 
+class TaskTypeForm(forms.ModelForm):
+    class Meta:
+        model = TaskType
+        fields = ["name"]
+        widgets = {
+            "name": forms.TextInput(
+                attrs={
+                    "placeholder": "Enter task type name",
+                    "class": "form-control bg-darker text-general border-darker rounded-3 px-3 py-2 w-75"
+                }
+            ),
+        }
+
+
 class PositionNameSearchForm(forms.Form):
     name = forms.CharField(
         max_length=100,
@@ -31,6 +45,20 @@ class PositionNameSearchForm(forms.Form):
             }
         ),
     )
+
+
+class PositionForm(forms.ModelForm):
+    class Meta:
+        model = Position
+        fields = ["name"]
+        widgets = {
+            "name": forms.TextInput(
+                attrs={
+                    "placeholder": "Enter position name",
+                    "class": "form-control bg-darker text-general border-darker rounded-3 px-3 py-2 w-75"
+                }
+            ),
+        }
 
 
 class WorkerCreationForm(UserCreationForm):
@@ -46,7 +74,7 @@ class WorkerCreationForm(UserCreationForm):
 class WorkerPositionUpdateForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
-        fields = ("position",)
+        fields = ("position", "first_name", "last_name", "username")
 
 
 class WorkerUsernameSearchForm(forms.Form):
