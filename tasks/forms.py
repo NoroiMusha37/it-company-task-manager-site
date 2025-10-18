@@ -64,17 +64,81 @@ class PositionForm(forms.ModelForm):
 class WorkerCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = get_user_model()
-        fields = UserCreationForm.Meta.fields + (
-            "position",
-            "first_name",
-            "last_name",
+        fields = ("username", "first_name", "last_name", "position")
+
+        widgets = {
+            "username": forms.TextInput(
+                attrs={
+                    "placeholder": "Enter username",
+                    "class": "form-control bg-darker text-general border-darker rounded-3 px-3 py-2"
+                }
+            ),
+            "first_name": forms.TextInput(
+                attrs={
+                    "placeholder": "Enter first name",
+                    "class": "form-control bg-darker text-general border-darker rounded-3 px-3 py-2"
+                }
+            ),
+            "last_name": forms.TextInput(
+                attrs={
+                    "placeholder": "Enter last name",
+                    "class": "form-control bg-darker text-general border-darker rounded-3 px-3 py-2"
+                }
+            ),
+            "position": forms.Select(
+                attrs={
+                    "class": "form-select bg-darker text-general border-darker rounded-3 px-3 py-2"
+                }
+            ),
+        }
+
+    # Додаємо стилізацію для password1 і password2
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["password1"].widget = forms.PasswordInput(
+            attrs={
+                "placeholder": "Enter password",
+                "class": "form-control bg-darker text-general border-darker rounded-3 px-3 py-2"
+            }
+        )
+        self.fields["password2"].widget = forms.PasswordInput(
+            attrs={
+                "placeholder": "Confirm password",
+                "class": "form-control bg-darker text-general border-darker rounded-3 px-3 py-2"
+            }
         )
 
 
 class WorkerPositionUpdateForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
-        fields = ("position", "first_name", "last_name", "username")
+        fields = ("username", "first_name", "last_name", "position")
+
+        widgets = {
+            "username": forms.TextInput(
+                attrs={
+                    "placeholder": "Enter username",
+                    "class": "form-control bg-darker text-general border-darker rounded-3 px-3 py-2"
+                }
+            ),
+            "first_name": forms.TextInput(
+                attrs={
+                    "placeholder": "Enter first name",
+                    "class": "form-control bg-darker text-general border-darker rounded-3 px-3 py-2"
+                }
+            ),
+            "last_name": forms.TextInput(
+                attrs={
+                    "placeholder": "Enter last name",
+                    "class": "form-control bg-darker text-general border-darker rounded-3 px-3 py-2"
+                }
+            ),
+            "position": forms.Select(
+                attrs={
+                    "class": "form-select bg-darker text-general border-darker rounded-3 px-3 py-2"
+                }
+            ),
+        }
 
 
 class WorkerUsernameSearchForm(forms.Form):
@@ -94,16 +158,55 @@ class WorkerUsernameSearchForm(forms.Form):
 class TaskForm(forms.ModelForm):
     assignees = forms.ModelMultipleChoiceField(
         queryset=get_user_model().objects.all(),
-        widget=forms.CheckboxSelectMultiple,
+        widget=forms.CheckboxSelectMultiple(
+            attrs={
+                "class": "form-check-input me-2"
+            }
+        ),
     )
     deadline = forms.DateTimeField(
-        widget=forms.DateTimeInput(attrs={"type": "datetime-local"}),
+        widget=forms.DateTimeInput(
+            attrs={
+                "type": "datetime-local",
+                "class": "form-control bg-darker text-general border-darker rounded-3 px-3 py-2"
+            }
+        ),
         input_formats=("%Y-%m-%dT%H:%M",),
     )
 
     class Meta:
         model = Task
         fields = "__all__"
+        widgets = {
+            "name": forms.TextInput(
+                attrs={
+                    "placeholder": "Enter task name",
+                    "class": "form-control bg-darker text-general border-darker rounded-3 px-3 py-2"
+                }
+            ),
+            "description": forms.Textarea(
+                attrs={
+                    "placeholder": "Enter task description",
+                    "class": "form-control bg-darker text-general border-darker rounded-3 px-3 py-2",
+                    "rows": 4
+                }
+            ),
+            "priority": forms.Select(
+                attrs={
+                    "class": "form-select bg-darker text-general border-darker rounded-3 px-3 py-2"
+                }
+            ),
+            "task_type": forms.Select(
+                attrs={
+                    "class": "form-select bg-darker text-general border-darker rounded-3 px-3 py-2"
+                }
+            ),
+            "is_completed": forms.CheckboxInput(
+                attrs={
+                    "class": "form-check-input"
+                }
+            ),
+        }
 
 
 class TaskNameSearchForm(forms.Form):
