@@ -1,11 +1,95 @@
-{% extends "base.html" %}
+{% extends 'layouts/base-presentation.html' %}
+
+{% block title %} Task Form {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block body_class %} form-page {% endblock body_class %}
 
 {% block content %}
-  <h1>{{ object|yesno:"Update,Create" }} a task</h1>
-  <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-secondary">Back</a>
-  <form action="" method="post" novalidate>
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit" class="btn btn-primary">
-  </form>
-{% endblock %}
+  <section class="bg-darker d-flex align-items-center justify-content-center min-vh-100 py-7">
+    <div class="container text-center">
+      <h1 class="text-info text-gradient fw-bold mb-4">
+        {{ object|yesno:"Update,Create" }} Task
+      </h1>
+      <div class="d-flex justify-content-center">
+        <div class="card bg-dark text-light shadow-lg w-75 mw-100 min-vw-50 p-4 d-flex flex-column position-relative">
+          <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+            <div class="small text-general fs-5">Fill in task details below</div>
+            <a href="{% url 'tasks:task-list' %}" class="btn bg-gradient-light text-dark">Back</a>
+          </div>
+          <form action="" method="post" novalidate class="d-flex flex-column flex-grow-1">
+            {% csrf_token %}
+            <div class="row g-3 mb-3">
+              <div class="col-md-6 text-start">
+                <label for="{{ form.name.id_for_label }}" class="form-label text-general">Task Name</label>
+                {{ form.name }}
+                {% if form.name.errors %}
+                  <div class="text-danger small mt-1">{{ form.name.errors }}</div>
+                {% endif %}
+              </div>
+              <div class="col-md-6 text-start">
+                <label for="{{ form.deadline.id_for_label }}" class="form-label text-general">Deadline</label>
+                {{ form.deadline }}
+                {% if form.deadline.errors %}
+                  <div class="text-danger small mt-1">{{ form.deadline.errors }}</div>
+                {% endif %}
+              </div>
+            </div>
+            <div class="mb-3 text-start">
+              <label for="{{ form.description.id_for_label }}" class="form-label text-general">Description</label>
+              {{ form.description }}
+              {% if form.description.errors %}
+                <div class="text-danger small mt-1">{{ form.description.errors }}</div>
+              {% endif %}
+            </div>
+            <div class="row g-3 mb-3">
+              <div class="col-md-6 text-start">
+                <label for="{{ form.priority.id_for_label }}" class="form-label text-general">Priority</label>
+                {{ form.priority }}
+                {% if form.priority.errors %}
+                  <div class="text-danger small mt-1">{{ form.priority.errors }}</div>
+                {% endif %}
+              </div>
+              <div class="col-md-6 text-start">
+                <label for="{{ form.task_type.id_for_label }}" class="form-label text-general">Task Type</label>
+                {{ form.task_type }}
+                {% if form.task_type.errors %}
+                  <div class="text-danger small mt-1">{{ form.task_type.errors }}</div>
+                {% endif %}
+              </div>
+            </div>
+            <div class="mb-3 text-start">
+              <label class="form-label text-general">Assignees</label>
+              <div class="d-flex flex-wrap">
+                {% for checkbox in form.assignees %}
+                  <div class="form-check me-3 mb-2">
+                    {{ checkbox.tag }}
+                    <label class="form-check-label text-general" for="{{ checkbox.id_for_label }}">
+                      {{ checkbox.choice_label }}
+                    </label>
+                  </div>
+                {% endfor %}
+              </div>
+              {% if form.assignees.errors %}
+                <div class="text-danger small mt-1">{{ form.assignees.errors }}</div>
+              {% endif %}
+            </div>
+            <div class="form-check form-switch mb-4 text-start">
+              {{ form.is_completed }}
+              <label class="form-check-label text-general" for="{{ form.is_completed.id_for_label }}">
+                Mark as Completed
+              </label>
+            </div>
+            <div class="mt-auto">
+              <button type="submit" class="btn bg-gradient-info text-white rounded-pill fw-bold w-100">
+                {{ object|yesno:"Update,Create" }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock content %}
