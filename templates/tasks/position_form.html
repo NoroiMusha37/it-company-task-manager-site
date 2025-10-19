@@ -21,8 +21,7 @@
           <div class="small text-general fs-5">Fill the field below</div>
           <a href="{% url 'tasks:position-list' %}" class="btn bg-gradient-light text-dark">Back</a>
         </div>
-
-        <form action="" method="post" novalidate class="d-flex flex-column flex-grow-1">
+        <form action="" autocomplete="off" method="post" novalidate class="d-flex flex-column flex-grow-1">
           {% csrf_token %}
           <div class="mb-4 text-start">
             {{ form.name.label_tag }}
@@ -32,14 +31,12 @@
             {% endif %}
           </div>
           <br>
-
           <div class="mt-auto text-start">
             <input type="submit"
                    value="{{ object|yesno:'Update,Create' }}"
                    class="btn bg-gradient-info text-white rounded-pill fw-bold">
           </div>
         </form>
-
       </div>
     </div>
   </div>
