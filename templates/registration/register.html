@@ -1,18 +1,57 @@
-{% extends "base.html" %}
+{% extends 'layouts/base-presentation.html' %}
+
+{% block title %} Login {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block body_class %} login-page {% endblock body_class %}
 
 {% block content %}
 
-{% if form.errors %}
-  <p>Passwords didn't match. Please try again.</p>
-{% endif %}
-
-<h1>Sign up</h1>
-
-<form method="post" action="{% url 'tasks:register' %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" value="Sign up" class="btn btn-primary" />
-  <input type="hidden" name="next" value="{{ next }}" />
-</form>
+  <section class="bg-darker d-flex align-items-center justify-content-center min-vh-100 py-7">
+    <div class="container text-center">
+      <div class="card bg-dark text-light shadow-lg w-50 mw-100 p-5 rounded-4">
+        <h1 class="text-info text-gradient fw-bold mb-4">Sign up</h1>
+        {% if form.errors %}
+          <div class="alert alert-danger py-2 small mb-4 rounded-3">
+            Passwords didn't match. Please try again.
+          </div>
+        {% endif %}
+        <form method="post" autocomplete="off" action="{% url 'tasks:register' %}" novalidate>
+          {% csrf_token %}
+          <div class="text-start">
+            {% for field in form %}
+              <div class="mb-3">
+                <label for="{{ field.id_for_label }}" class="form-label text-detail">
+                  {{ field.label }}
+                </label>
+                {{ field }}
+                {% if field.errors %}
+                  <div class="text-danger small mt-1">
+                    {{ field.errors }}
+                  </div>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+          <div class="form-check mb-4 text-start">
+            <input type="checkbox" class="form-check-input bg-dark border border-secondary" id="rememberMe">
+            <label class="form-check-label text-general small" for="rememberMe">
+              Remember me
+            </label>
+          </div>
+          <button type="submit" class="btn bg-gradient-info text-white rounded-pill fw-bold w-100 py-2 mt-4">
+            Sign up
+          </button>
+          <input type="hidden" name="next" value="{{ next }}"/>
+        </form>
+        <p class="mt-4 text-general">
+          Already have an account?
+          <a href="{% url 'login' %}" class="text-info fw-bold text-decoration-none">Sign in</a>
+        </p>
+      </div>
+    </div>
+  </section>
 
 {% endblock %}
