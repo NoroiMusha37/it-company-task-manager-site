@@ -1,0 +1,59 @@
+{% extends 'layouts/base-presentation.html' %}
+
+{% block title %} Positions {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block body_class %} list-page {% endblock body_class %}
+
+{% block content %}
+  <section class="pt-5 bg-darker position-relative">
+    <div class="container mt-5">
+      <div class="text-center text-info text-gradient mb-4">
+        <h1 class="mb-0">Positions</h1>
+      </div>
+      <div class="card z-index-2 border-radius-xl shadow-lg bg-dark text-light p-4">
+        <div class="d-flex justify-content-between align-items-start mb-4 gap-2 flex-wrap">
+          <form method="get" class="d-flex flex-grow-1 me-3">
+            <div class="input-group search-input-group">
+              {{ search_form.name }}
+              <button type="submit" class="btn bg-gradient-info">Search</button>
+            </div>
+          </form>
+          <a href="{% url 'tasks:position-create' %}" class="btn bg-gradient-success text-white">Create Position</a>
+
+        </div>
+        {% if position_list %}
+          <div class="container">
+            <div class="row text-light fw-bold mb-2 py-2">
+              <div class="col ps-6 text-secondary">Name</div>
+              <div class="col text-end pe-9 text-secondary">Actions</div>
+            </div>
+            {% for position in position_list %}
+              <div class="row align-items-center py-2
+                  {% if forloop.first %}border-top border-darker{% endif %}
+                  border-bottom border-darker">
+                <div class="col ps-4 d-flex align-items-center">
+                  <a href="{% url 'tasks:worker-list' %}?position={{ position.id }}" class="text-info font-weight-bold">
+                    {{ position.name }}
+                  </a>
+                </div>
+                <div class="col text-end pe-5 d-flex justify-content-end gap-5 align-items-center py-2">
+                  <a href="{% url 'tasks:position-update' pk=position.id %}"
+                     class="btn btn-sm bg-gradient-info btn-center">Update
+                  </a>
+                  <a href="{% url 'tasks:position-delete' pk=position.id %}"
+                     class="btn btn-sm btn-danger btn-center">Delete
+                  </a>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <p class="text-muted">There are no positions in the company.</p>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+{% endblock content %}

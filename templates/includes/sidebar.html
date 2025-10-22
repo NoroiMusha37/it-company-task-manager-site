@@ -1,0 +1,15 @@
+<br>
+{% if user.is_authenticated %}
+  <form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Logout" class="btn btn-danger">
+  </form>
+{% endif %}
+<br>
+<ul class="sidebar-nav list-group">
+  <li class="list-group-item"><a href="{% url "tasks:index" %}">Home</a></li>
+  <li class="list-group-item"><a href="{% url "tasks:worker-list" %}">Workers</a></li>
+  <li class="list-group-item"><a href="{% url "tasks:task-list" %}">Tasks</a></li>
+  <li class="list-group-item"><a href="{% url "tasks:task-type-list" %}">Task Types</a></li>
+  <li class="list-group-item"><a href="{% url "tasks:position-list" %}">Positions</a></li>
+</ul>

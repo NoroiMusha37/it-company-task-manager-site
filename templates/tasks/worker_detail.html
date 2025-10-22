@@ -1,0 +1,66 @@
+{% extends 'layouts/base-presentation.html' %}
+
+{% block title %} Worker Detail {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block body_class %} detail-page {% endblock body_class %}
+
+{% block content %}
+  <section class="pt-5 bg-darker position-relative">
+    <div class="container mt-5">
+      <div class="card z-index-2 border-radius-xl shadow-lg bg-dark text-light p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+          <h1 class="mb-0 text-info text-gradient">{{ worker.username }}</h1>
+          <div class="d-flex gap-2 flex-wrap">
+            <a href="{% url 'tasks:worker-list' %}" class="btn bg-gradient-light">Back</a>
+            <a href="{% url 'tasks:worker-update' pk=worker.id %}" class="btn bg-gradient-info">Update</a>
+            <a href="{% url 'tasks:worker-delete' pk=worker.id %}" class="btn btn-danger">Delete</a>
+          </div>
+        </div>
+        <div class="row mb-3 text-start">
+          <div class="col-6 col-md-4 mb-2 text-detail fs-5"><strong>First Name:</strong> <span
+              class="ms-1">{{ worker.first_name }}</span></div>
+          <div class="col-6 col-md-4 mb-2 text-detail fs-5"><strong>Last Name:</strong> <span
+              class="ms-1">{{ worker.last_name }}</span></div>
+          <div class="col-12 col-md-4 mb-2 text-detail fs-5"><strong>Position:</strong> <span
+              class="ms-1">{{ worker.position.name }}</span></div>
+        </div>
+        <div class="mt-4">
+          <h4 class="text-general">Tasks</h4>
+          {% if worker.task_set.all %}
+            {% for task in worker.task_set.all %}
+              <hr class="border-secondary">
+              <div class="row mb-2 align-items-center">
+                <div class="col-4 text-detail">
+                  <strong>Name:</strong>
+                  <a href="{% url 'tasks:task-detail' pk=task.id %}" class="text-info font-weight-bold ms-1">
+                    {{ task.name }}
+                  </a>
+                </div>
+                <div class="col-2 text-detail">
+                  <strong>Priority:</strong> <span class="ms-1">{{ task.priority }}</span>
+                </div>
+                <div class="col-3 text-detail">
+                  <strong>Deadline:</strong> <span class="ms-1">{{ task.deadline }}</span>
+                </div>
+                <div class="col-2 text-detail">
+                  <strong>Completed:</strong>
+                  <span class="ms-1 {% if task.is_completed %}text-success{% else %}text-danger{% endif %}">
+            {{ task.is_completed }}
+          </span>
+                </div>
+                <div class="col-1 text-detail">
+                  <strong>Id:</strong> <span class="ms-1">{{ task.id }}</span>
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p class="text-muted">Worker has no tasks</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock content %}

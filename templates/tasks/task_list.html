@@ -1,0 +1,74 @@
+{% extends 'layouts/base-presentation.html' %}
+
+{% block title %} Tasks {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block body_class %} list-page {% endblock body_class %}
+
+{% block content %}
+  <section class="pt-5 bg-darker position-relative">
+    <div class="container mt-5">
+      <div class="text-center text-info text-gradient mb-4">
+        <h1 class="mb-0">Tasks</h1>
+      </div>
+      <div class="card z-index-2 border-radius-xl shadow-lg bg-dark text-light p-4">
+        <div class="d-flex justify-content-between align-items-start mb-4 gap-2 flex-wrap">
+          <form method="get" class="d-flex flex-grow-1 me-3">
+            {% if task_type %}
+              <input type="hidden" name="task_type" value="{{ task_type.id }}">
+            {% endif %}
+            <div class="input-group search-input-group">
+              {{ search_form.name }}
+              <button type="submit" class="btn bg-gradient-info">Search</button>
+            </div>
+          </form>
+          {% if task_type %}
+            <a href="{% url 'tasks:task-type-list' %}" class="btn bg-gradient-light">Back</a>
+          {% else %}
+            <a href="{% url 'tasks:task-create' %}" class="btn bg-gradient-success text-white">Create Task</a>
+          {% endif %}
+        </div>
+        {% if task_list %}
+          <div class="container">
+            <div class="row text-light fw-bold mb-2 py-2 text-center">
+              <div class="col-1 text-secondary ps-0">ID</div>
+              <div class="col-4 text-secondary">Name</div>
+              <div class="col-1 text-secondary">Priority</div>
+              <div class="col-2 text-secondary">Type</div>
+              <div class="col-2 text-secondary">Deadline</div>
+              <div class="col-2 text-secondary">Completed</div>
+            </div>
+            {% for task in task_list %}
+              <div class="row py-2
+                        {% if forloop.first %}border-top border-darker{% endif %}
+                        border-bottom border-darker align-items-center text-center">
+                <div class="col-1 ps-0 text-general">{{ task.id }}</div>
+                <div class="col-4 text-start">
+                  <a href="{% url 'tasks:task-detail' pk=task.id %}" class="text-info font-weight-bold">
+                    {{ task.name }}
+                  </a>
+                </div>
+                <div class="col-1 text-general">{{ task.priority }}</div>
+                <div class="col-2 text-general">{{ task.task_type.name }}</div>
+                <div class="col-2 text-general">{{ task.deadline }}</div>
+                <div class="col-2 {% if task.is_completed %}text-success{% else %}text-danger{% endif %}">
+                  {{ task.is_completed }}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <p class="text-muted">
+            {% if task_type %}
+              There are no tasks with type {{ task_type.name }}.
+            {% else %}
+              There are no tasks.
+            {% endif %}
+          </p>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+{% endblock content %}

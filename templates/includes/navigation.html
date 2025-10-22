@@ -1,0 +1,73 @@
+<div class="container position-sticky z-index-sticky top-0">
+  <div class="row">
+    <div class="col-12">
+      <nav
+          class="navbar navbar-expand-lg blur blur-rounded top-0 z-index-fixed shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
+        <div class="container-fluid">
+          <div class="collapse navbar-collapse pt-3 pb-2 py-lg-0" id="navigation">
+            <ul class="navbar-nav navbar-nav-hover w-100">
+              {% if not user.is_authenticated %}
+                <li class="nav-item me-auto ms-3 ms-lg-0">
+                  <a href="https://github.com/NoroiMusha37/it-company-task-manager-site/tree/main/"
+                     target="_blank"
+                     class="btn btn-sm bg-gradient-warning btn-round mb-0 me-1 mt-2 mt-md-0">
+                    GIT Repo
+                  </a>
+                </li>
+
+              {% else %}
+                <li class="nav-item me-auto ms-3 ms-lg-0">
+                  <a href="https://github.com/NoroiMusha37/it-company-task-manager-site/tree/main/"
+                     target="_blank"
+                     class="btn btn-sm bg-gradient-warning btn-round mb-0 me-1 mt-2 mt-md-0">
+                    GIT Repo
+                  </a>
+                </li>
+
+                <li class="nav-item my-auto ms-lg-0">
+                  <a href="{% url "tasks:index" %}"
+                     class="btn btn-sm bg-gradient-info btn-round mb-0 me-1 mt-2 mt-md-0">
+                    Homepage
+                  </a>
+                </li>
+                <li class="nav-item my-auto ms-lg-0">
+                  <a href="{% url "tasks:task-type-list" %}"
+                     class="btn btn-sm bg-gradient-info btn-round mb-0 me-1 mt-2 mt-md-0">
+                    Task Types
+                  </a>
+                </li>
+                <li class="nav-item my-auto ms-3 ms-lg-0">
+                  <a href="{% url "tasks:task-list" %}"
+                     class="btn btn-sm bg-gradient-info btn-round mb-0 me-1 mt-2 mt-md-0">
+                    Tasks
+                  </a>
+                </li>
+                <li class="nav-item my-auto ms-3 ms-lg-0">
+                  <a href="{% url "tasks:position-list" %}"
+                     class="btn btn-sm bg-gradient-info btn-round mb-0 me-1 mt-2 mt-md-0">
+                    Positions
+                  </a>
+                </li>
+                <li class="nav-item my-auto ms-3 ms-lg-0">
+                  <a href="{% url "tasks:worker-list" %}"
+                     class="btn btn-sm bg-gradient-info btn-round mb-0 me-1 mt-2 mt-md-0">
+                    Workers
+                  </a>
+                </li>
+                <li class="nav-item ms-lg-auto">
+                  <form action="{% url 'logout' %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm bg-gradient-warning btn-round mb-0 me-1 mt-2 mt-md-0">
+                      Logout
+                    </button>
+                  </form>
+                </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- End Navbar -->
+    </div>
+  </div>
+</div>

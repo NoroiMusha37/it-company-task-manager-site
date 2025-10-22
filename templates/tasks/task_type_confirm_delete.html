@@ -1,0 +1,34 @@
+{% extends 'layouts/base-presentation.html' %}
+
+{% block title %} Task Type Delete {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block body_class %} delete-page {% endblock body_class %}
+
+{% block content %}
+  <section class="pt-5 bg-darker position-relative">
+    <div class="container mt-5">
+      <div class="card z-index-2 border-radius-xl shadow-lg bg-dark text-light p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h1 class="mb-0">
+            <span class="text-info text-gradient">Delete</span>
+            <span class="text-danger fw-bold">{{ object.name }}</span>
+            <span class="text-info text-gradient">Task Type?</span>
+          </h1>
+        </div>
+
+        <p class="mb-4 text-detail">Are you sure you want to delete this task type?</p>
+
+        <div class="d-flex gap-2 flex-wrap">
+          <a href="{% url 'tasks:task-type-list' %}" class="btn bg-gradient-light">No</a>
+          <form action="" method="post" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger text-white">Yes</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock content %}
